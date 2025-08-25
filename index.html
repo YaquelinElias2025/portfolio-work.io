@@ -1,0 +1,460 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Jackie Elías · Portafolio & Blog</title>
+  <meta name="description" content="Portafolio y blog personal de Jackie Elías: proyectos de informática, notas de aprendizaje y meteorología aficionada." />
+  <meta name="theme-color" content="#6d5dfc" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='48' fill='%236d5dfc'/%3E%3Ctext x='50' y='60' font-size='52' text-anchor='middle' fill='white' font-family='Arial, sans-serif'%3EJE%3C/text%3E%3C/svg%3E" />
+  <style>
+    /* ===============
+       Estilos base
+       =============== */
+    :root{
+      --bg: #0f1222;          /* fondo oscuro */
+      --bg-soft:#141838;      /* cartas */
+      --text:#EAEAF2;         /* texto */
+      --muted:#B9B9C9;        /* texto tenue */
+      --brand:#6d5dfc;        /* acento */
+      --brand-2:#00d4ff;      /* acento secundario */
+      --ok:#21c55d;
+      --warn:#f59e0b;
+      --danger:#ef4444;
+      --ring: 0 0 0 3px rgba(109,93,252,.35);
+      --radius: 16px;
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
+    }
+    /* Modo claro (se activa con la clase .light en <html>) */
+    html.light{
+      --bg:#f7f7fb;
+      --bg-soft:#ffffff;
+      --text:#13141f;
+      --muted:#505064;
+      --ring: 0 0 0 3px rgba(109,93,252,.20);
+      --shadow: 0 10px 26px rgba(16,24,40,.10);
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font: 16px/1.6 system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      color:var(--text); background:radial-gradient(1200px 600px at 120% -10%, rgba(109,93,252,.18), transparent 50%),
+                         radial-gradient(900px 500px at -10% -10%, rgba(0,212,255,.12), transparent 50%), var(--bg);
+      -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
+    }
+    img{max-width:100%; display:block}
+    a{color:inherit; text-decoration:none}
+    .container{width:min(1100px, 92vw); margin:0 auto}
+
+    /* ===============
+       Header & Nav
+       =============== */
+    header{
+      position:sticky; top:0; z-index:40; backdrop-filter:saturate(120%) blur(10px);
+      background: color-mix(in oklab, var(--bg) 85%, transparent);
+      border-bottom:1px solid color-mix(in oklab, var(--text) 12%, transparent);
+    }
+    .nav{display:flex; align-items:center; justify-content:space-between; gap:12px; padding:14px 0}
+    .brand{display:flex; align-items:center; gap:10px; font-weight:700}
+    .brand .logo{width:36px; height:36px; border-radius:12px; background:linear-gradient(135deg, var(--brand), var(--brand-2)); display:grid; place-items:center; box-shadow:var(--shadow)}
+    .brand .logo span{font-weight:800}
+    .nav ul{list-style:none; display:flex; gap:14px; padding:0; margin:0}
+    .nav a{padding:8px 12px; border-radius:12px; opacity:.9}
+    .nav a:hover{background:color-mix(in oklab, var(--text) 8%, transparent); opacity:1}
+
+    .actions{display:flex; gap:10px; align-items:center}
+    .btn, button{cursor:pointer; border:0}
+    .btn{
+      padding:10px 14px; border-radius:12px; font-weight:600; background:linear-gradient(135deg, var(--brand), var(--brand-2)); color:white;
+      box-shadow: var(--shadow);
+    }
+    .btn.ghost{background:transparent; color:var(--text); border:1px solid color-mix(in oklab, var(--text) 18%, transparent); box-shadow:none}
+
+    /* Toggle */
+    .toggle{display:inline-flex; gap:8px; align-items:center; padding:6px 10px; border-radius:999px; border:1px solid color-mix(in oklab, var(--text) 18%, transparent)}
+    .toggle input{appearance:none; width:36px; height:22px; background:color-mix(in oklab, var(--text) 18%, transparent); border-radius:999px; position:relative; outline:none}
+    .toggle input:before{content:""; position:absolute; width:16px; height:16px; border-radius:50%; background:white; top:3px; left:3px; transition:all .25s ease; box-shadow:0 2px 8px rgba(0,0,0,.35)}
+    .toggle input:checked{background:linear-gradient(135deg, var(--brand), var(--brand-2))}
+    .toggle input:checked:before{left:17px}
+
+    /* ===============
+       Hero
+       =============== */
+    .hero{padding:52px 0 28px}
+    .hero .wrap{display:grid; grid-template-columns: 1.2fr .8fr; gap:28px; align-items:center}
+    .kicker{display:inline-flex; align-items:center; gap:8px; color:var(--muted); font-weight:600; letter-spacing:.5px}
+    .kicker .dot{width:8px; height:8px; border-radius:50%; background:var(--ok)}
+    h1{font-size: clamp(28px, 6vw, 48px); line-height:1.15; margin:10px 0}
+    .lead{color:var(--muted)}
+    .hero .card{background:var(--bg-soft); border:1px solid color-mix(in oklab, var(--text) 10%, transparent); padding:18px; border-radius:var(--radius)}
+
+    .badges{display:flex; flex-wrap:wrap; gap:10px; margin:18px 0}
+    .badge{padding:6px 10px; border-radius:999px; border:1px dashed color-mix(in oklab, var(--text) 20%, transparent); color:var(--muted); font-weight:600}
+
+    /* ===============
+       Secciones
+       =============== */
+    section{padding:32px 0}
+    .section-title{font-size: clamp(22px, 4.5vw, 32px); margin:0 0 8px}
+    .section-sub{color:var(--muted); margin:0 0 18px}
+
+    /* Grids */
+    .grid{display:grid; gap:16px}
+    .grid.cards{grid-template-columns: repeat(auto-fill, minmax(260px, 1fr))}
+    .card{background:var(--bg-soft); border:1px solid color-mix(in oklab, var(--text) 10%, transparent); border-radius:var(--radius); overflow:hidden; box-shadow:var(--shadow)}
+    .card .body{padding:16px}
+    .chip{display:inline-flex; align-items:center; gap:6px; font-size:.9rem; color:var(--muted)}
+
+    /* Proyectos */
+    .project-cover{height:160px; background:linear-gradient(120deg, color-mix(in oklab, var(--brand) 80%, black), color-mix(in oklab, var(--brand-2) 80%, black)); display:grid; place-items:center}
+    .project-cover svg{opacity:.9}
+    .meta{display:flex; justify-content:space-between; align-items:center; gap:10px; margin-top:10px}
+    .tags{display:flex; flex-wrap:wrap; gap:8px}
+    .tag{font-size:.8rem; padding:4px 8px; border-radius:999px; border:1px solid color-mix(in oklab, var(--text) 18%, transparent); color:var(--muted)}
+
+    /* Blog */
+    .post{display:flex; flex-direction:column; gap:8px}
+    .post time{color:var(--muted); font-size:.95rem}
+
+    /* Contacto */
+    form{display:grid; gap:10px}
+    input, textarea{background:var(--bg-soft); color:var(--text); border:1px solid color-mix(in oklab, var(--text) 14%, transparent); border-radius:12px; padding:12px}
+    input:focus, textarea:focus{outline:none; box-shadow:var(--ring)}
+    textarea{min-height:120px; resize:vertical}
+
+    /* Footer */
+    footer{padding:28px 0 40px; color:var(--muted)}
+    .sep{height:1px; background: color-mix(in oklab, var(--text) 10%, transparent); margin:20px 0}
+
+    /* Responsive */
+    @media (max-width: 860px){
+      .hero .wrap{grid-template-columns: 1fr;}
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container nav">
+      <a class="brand" href="#inicio" aria-label="Ir al inicio">
+        <span class="logo"><span>JE</span></span>
+        <span>Jackie Elías</span>
+      </a>
+      <nav aria-label="Secciones principales">
+        <ul>
+          <li><a href="#sobre-mi">Sobre mí</a></li>
+          <li><a href="#servicios">Servicios</a></li>
+          <li><a href="#proyectos">Portafolio</a></li>
+          <li><a href="#blog">Blog</a></li>
+          <li><a href="#contacto">Contacto</a></li>
+        </ul>
+      </nav>
+      <div class="actions">
+        <label class="toggle" title="Cambiar tema">
+          <span aria-hidden="true">🌙</span>
+          <input id="themeToggle" type="checkbox" aria-label="Cambiar tema claro/oscuro">
+          <span aria-hidden="true">☀️</span>
+        </label>
+        <a class="btn" href="#contacto">Contrátame</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- =============== Hero =============== -->
+  <section id="inicio" class="hero">
+    <div class="container wrap">
+      <div>
+        <span class="kicker"><span class="dot"></span> Disponible para proyectos freelance</span>
+        <h1>Hola, soy <strong>Jackie Elías</strong> — egresada en Informática y <em>meteoróloga aficionada</em>.</h1>
+        <p class="lead">Construyo sitios y mini-sistemas web (HTML, CSS, JS). Me encanta aprender, documentar y compartir.
+          Aquí encontrarás mi portafolio, artículos y formas de contacto.</p>
+        <div class="badges">
+          <span class="badge">HTML • CSS • JS</span>
+          <span class="badge">GitHub Pages</span>
+          <span class="badge">Documentación</span>
+          <span class="badge">Meteorología</span>
+        </div>
+        <div style="display:flex; gap:10px; flex-wrap:wrap">
+          <a class="btn" href="#proyectos">Ver proyectos</a>
+          <a class="btn ghost" href="#blog">Leer blog</a>
+        </div>
+      </div>
+      <div>
+        <div class="card" role="img" aria-label="Tarjeta con datos rápidos">
+          <strong>Datos rápidos</strong>
+          <ul style="margin:10px 0 0 18px; padding:0; color:var(--muted)">
+            <li>Ubicación: El Salvador</li>
+            <li>Intereses: web básica, UX simple, clima</li>
+            <li>Disponibilidad: parcial / por proyecto</li>
+          </ul>
+          <div class="sep"></div>
+          <div style="display:flex; gap:8px; flex-wrap:wrap">
+            <a class="btn ghost" href="yaquelinelias2025@gmail.com">✉️ Escríbeme</a>
+            <a class="btn ghost" href="https://github.com/YaquelinElias2025" target="_blank" rel="noreferrer">🐙 GitHub</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =============== Sobre mí =============== -->
+  <section id="sobre-mi">
+    <div class="container">
+      <h2 class="section-title">Sobre mí</h2>
+      <p class="section-sub">Breve historia, enfoque y lo que te gusta construir.</p>
+      <div class="grid" style="grid-template-columns: 1.1fr .9fr">
+        <div class="card">
+          <div class="body">
+            <p>Hola, soy Jackie, Egresada en Informática. Disfruto crear sitios web claros y útiles, con una estética minimalista y rendimiento simple.
+              Me gusta documentar lo que hago para que cualquiera pueda reutilizarlo.</p>
+            <p>Como <strong>meteoróloga aficionada</strong>, he construido mini herramientas para registrar fenómenos y alertas básicas en la web.
+              Me interesa unir datos del clima con interfaces sencillas para personas no técnicas.</p>
+            <p>Actualmente busco oportunidades freelance para construir portafolios, páginas personales y pequeños sistemas front‑end.</p>
+          </div>
+        </div>
+        <div class="grid">
+          <div class="card"><div class="body">
+            <div class="chip">⭐ Habilidades clave</div>
+            <div class="tags" style="margin-top:10px">
+              <span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">JavaScript</span>
+              <span class="tag">Git/GitHub</span><span class="tag">Accesibilidad</span><span class="tag">Escritura técnica</span>
+            </div>
+          </div></div>
+          <div class="card"><div class="body">
+            <div class="chip">🎓 Formación</div>
+            <p class="section-sub" style="margin:8px 0 0">Egresada en Informática · 2025</p>
+          </div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =============== Servicios =============== -->
+  <section id="servicios">
+    <div class="container">
+      <h2 class="section-title">Servicios</h2>
+      <p class="section-sub">Lo que puedo hacer por ti o tu proyecto.</p>
+      <div class="grid cards">
+        <article class="card">
+          <div class="project-cover" aria-hidden="true">
+            <svg width="64" height="64" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 5h18M3 12h18M3 19h18" stroke="white" stroke-width="2" stroke-linecap="round"/></svg>
+          </div>
+          <div class="body">
+            <h3>Portafolios & páginas personales</h3>
+            <p>Landing pages limpias, responsive y fáciles de mantener. Publicación en GitHub Pages.</p>
+          </div>
+        </article>
+        <article class="card">
+          <div class="project-cover" aria-hidden="true">
+            <svg width="64" height="64" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 5h16v14H4z" stroke="white" stroke-width="2"/><path d="M4 9h16" stroke="white" stroke-width="2"/></svg>
+          </div>
+          <div class="body">
+            <h3>Mini‑sistemas web</h3>
+            <p>CRUD con HTML/CSS/JS (LocalStorage): productos, alertas, registros simples.</p>
+          </div>
+        </article>
+        <article class="card">
+          <div class="project-cover" aria-hidden="true">
+            <svg width="64" height="64" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 12a9 9 0 1018 0 9 9 0 00-18 0z" stroke="white" stroke-width="2"/><path d="M12 7v5l3 3" stroke="white" stroke-width="2" stroke-linecap="round"/></svg>
+          </div>
+          <div class="body">
+            <h3>Capacitación básica</h3>
+            <p>Word, Excel, manejo de archivos, introducción a la web y GitHub.</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- =============== Proyectos =============== -->
+  <section id="proyectos">
+    <div class="container">
+      <h2 class="section-title">Proyectos destacados</h2>
+      <p class="section-sub">Una muestra práctica de lo que construyo.</p>
+      <div id="projectsGrid" class="grid cards" aria-live="polite"></div>
+    </div>
+  </section>
+
+  <!-- =============== Blog =============== -->
+  <section id="blog">
+    <div class="container">
+      <h2 class="section-title">Últimos artículos</h2>
+      <p class="section-sub">Notas cortas de aprendizaje y meteorología aficionada.</p>
+      <div id="postsList" class="grid cards" aria-live="polite"></div>
+    </div>
+  </section>
+
+  <!-- =============== Contacto =============== -->
+  <section id="contacto">
+    <div class="container">
+      <h2 class="section-title">Contacto</h2>
+      <p class="section-sub">Cuéntame sobre tu idea o proyecto. Respondo en 24–48h.</p>
+      <div class="grid" style="grid-template-columns: 1fr 1fr">
+        <form id="contactForm" onsubmit="return handleSubmit(event)">
+          <label>
+            <span>Nombre</span>
+            <input name="name" placeholder="Tu nombre" aria-label="Nombre" required />
+          </label>
+          <label>
+            <span>Email</span>
+            <input type="email" name="email" placeholder="yaquelinelias2025@gmail.com" aria-label="Email" required />
+          </label>
+          <label>
+            <span>Mensaje</span>
+            <textarea name="message" placeholder="¿En qué te ayudo?" aria-label="Mensaje" required></textarea>
+          </label>
+          <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap">
+            <button class="btn" type="submit">Enviar</button>
+            <a class="btn ghost" href="yaquelinelias2025@gmail.com">o escríbeme por correo</a>
+          </div>
+        </form>
+        <div class="card"><div class="body">
+          <div class="chip">📬 También en</div>
+          <ul style="margin:10px 0 0 18px; padding:0; color:var(--muted)">
+            <li>GitHub: <a href="https://github.com/YaquelinElias2025" target="_blank" rel="noreferrer">@tuusuario</a></li>
+            <li>WhatsApp: <a href="https://wa.me/50378065077">+503 78065077</a></li>
+          </ul>
+        </div></div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <div class="sep"></div>
+      <div style="display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap">
+        <small>© <span id="year"></span> Jackie Elías — Hecho con HTML, CSS y JS. Publicado en GitHub Pages.</small>
+        <small><a href="#inicio">Volver arriba ↑</a></small>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // ==============================
+    //  Modo oscuro / claro
+    // ==============================
+    const themeToggle = document.getElementById('themeToggle');
+    const storedTheme = localStorage.getItem('theme');
+    const prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+
+    function applyTheme(mode){
+      document.documentElement.classList.toggle('light', mode === 'light');
+      themeToggle.checked = (mode === 'light');
+      localStorage.setItem('theme', mode);
+    }
+    applyTheme(storedTheme || (prefersLight ? 'light' : 'dark'));
+    themeToggle.addEventListener('change', () => applyTheme(themeToggle.checked ? 'light' : 'dark'));
+
+    // ==============================
+    //  Datos: proyectos y posts
+    //  Edita este array para personalizar tu sitio.
+    // ==============================
+    const projects = [
+      {
+        title: 'Mini CMS / Blog personal',
+        description: 'Editor y listado de posts con LocalStorage. Estilo minimalista y exportación JSON.',
+        link: '#', // reemplaza con tu repo o demo
+        tags: ['HTML','CSS','JS']
+      },
+      {
+        title: 'Sistema de Ventas (demo)',
+        description: 'Gestión de productos, alertas por bajo stock y reportes básicos en front‑end.',
+        link: '#',
+        tags: ['Frontend','LocalStorage']
+      },
+      {
+        title: 'Panel Meteorológico Básico',
+        description: 'Registro de alertas y fenómenos. Interfaz clara para observaciones rápidas.',
+        link: '#',
+        tags: ['Meteorología','UI simple']
+      }
+    ];
+
+    const posts = [
+      {
+        title: 'Cómo publiqué mi portafolio en GitHub Pages',
+        date: '2025-08-20',
+        summary: 'Los pasos clave: repo, branch, Pages y enlazar dominio. Consejos de estructura.',
+        link: '#'
+      },
+      {
+        title: 'Lecciones creando un sistema meteorológico amateur',
+        date: '2025-08-12',
+        summary: 'Qué funcionó, qué simplifiqué y cómo planeo mostrar datos sin sobrecargar la UI.',
+        link: '#'
+      }
+    ];
+
+    // ==============================
+    //  Render dinámico (proyectos & posts)
+    // ==============================
+    function el(tag, attrs={}, children=[]) {
+      const node = document.createElement(tag);
+      Object.entries(attrs).forEach(([k,v])=>{
+        if(k==='class') node.className = v; else if(k==='html') node.innerHTML=v; else node.setAttribute(k,v);
+      });
+      (Array.isArray(children)?children:[children]).filter(Boolean).forEach(ch=> node.appendChild(ch));
+      return node;
+    }
+
+    function renderProjects(){
+      const grid = document.getElementById('projectsGrid');
+      projects.forEach(p=>{
+        const cover = el('div', {class:'project-cover', 'aria-hidden':'true'}, [
+          el('svg', {width:'64', height:'64', viewBox:'0 0 24 24', xmlns:'http://www.w3.org/2000/svg'}, [
+            el('path', {d:'M4 6h16v12H4z', stroke:'white', 'stroke-width':'2', fill:'none'}),
+            el('path', {d:'M4 10h16', stroke:'white', 'stroke-width':'2'})
+          ])
+        ]);
+        const body = el('div', {class:'body'}, [
+          el('h3', {html:p.title}),
+          el('p', {html:p.description}),
+          el('div', {class:'meta'}, [
+            el('div', {class:'tags'}, p.tags.map(t=> el('span', {class:'tag', html:t}))),
+            el('a', {href:p.link || '#', class:'btn ghost', target:'_blank', rel:'noreferrer', html:'Ver'}),
+          ])
+        ]);
+        grid.appendChild(el('article', {class:'card'}, [cover, body]));
+      });
+    }
+
+    function renderPosts(){
+      const list = document.getElementById('postsList');
+      posts.forEach(post=>{
+        const article = el('article', {class:'card post'}, [
+          el('div', {class:'body'}, [
+            el('h3', {html: post.title}),
+            el('time', {datetime: post.date, html: new Date(post.date).toLocaleDateString('es-SV', {year:'numeric', month:'long', day:'numeric'})}),
+            el('p', {html: post.summary}),
+            el('div', {}, el('a', {href:post.link || '#', class:'btn ghost', target:'_blank', rel:'noreferrer', html:'Leer más'}))
+          ])
+        ]);
+        list.appendChild(article);
+      });
+    }
+
+    // ==============================
+    //  Contacto (demo)
+    // ==============================
+    function handleSubmit(e){
+      e.preventDefault();
+      const data = Object.fromEntries(new FormData(e.target).entries());
+      alert(`¡Gracias, ${data.name}!\nTe escribiré a: ${data.email}`);
+      // Truco: abre el correo del usuario con mensaje prellenado
+      const mailto = `mailto:tu.email@ejemplo.com?subject=Contacto%20desde%20tu%20sitio&body=${encodeURIComponent(data.message + '\n\n— ' + data.name + ' (' + data.email + ')')}`;
+      window.location.href = mailto;
+      e.target.reset();
+      return false;
+    }
+    window.handleSubmit = handleSubmit;
+
+    // ==============================
+    //  Init
+    // ==============================
+    document.getElementById('year').textContent = new Date().getFullYear();
+    renderProjects();
+    renderPosts();
+  </script>
+</body>
+</html>
